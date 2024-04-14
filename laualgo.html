@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operaciones Matriciales y con Listas</title>
+</head>
+<body>
+    <h1>Operaciones Matriciales y con Listas</h1>
+    <div id="output"></div>
+
+    <script>
+        function generarMatrices() {
+            // Datos de prueba para las matrices
+            const ordenMatriz1 = 3;
+            const ordenMatriz2 = 3;
+            const matriz1 = [[0.1, 0.2, 0.3], [0.4, 0.5, 0.6], [0.7, 0.8, 0.9]];
+            const matriz2 = [[0.9, 0.8, 0.7], [0.6, 0.5, 0.4], [0.3, 0.2, 0.1]];
+
+            // Verificar si las matrices son simétricas
+            const esSimetrica1 = verificarSimetria(matriz1);
+            const esSimetrica2 = verificarSimetria(matriz2);
+
+            // Mostrar las matrices generadas y si son simétricas o no
+            let outputHTML = "<pre>Matriz 1:\n" + JSON.stringify(matriz1, null, 2) + "\nEs simétrica: " + esSimetrica1 + "\n\nMatriz 2:\n" + JSON.stringify(matriz2, null, 2) + "\nEs simétrica: " + esSimetrica2 + "</pre>";
+
+            // Realizar la suma de las matrices
+            const sumaMatrices = matriz1.map((fila, i) => fila.map((elemento, j) => elemento + matriz2[i][j]));
+            outputHTML += "<pre>Suma de las matrices:\n" + JSON.stringify(sumaMatrices, null, 2) + "</pre>";
+
+            // Realizar la resta de las matrices
+            const restaMatrices = matriz1.map((fila, i) => fila.map((elemento, j) => elemento - matriz2[i][j]));
+            outputHTML += "<pre>Resta de las matrices:\n" + JSON.stringify(restaMatrices, null, 2) + "</pre>";
+
+            // Datos de prueba para la lista
+            const listaPrueba = [3, 6, 8, 1, 5, 2, 9, 4, 7];
+
+            // Mostrar la lista de prueba antes del ordenamiento
+            outputHTML += "<pre>Lista de prueba antes del ordenamiento:\n" + JSON.stringify(listaPrueba, null, 2) + "</pre>";
+
+            // Ordenamiento de la lista de prueba
+            const listaOrdenada = ordenamientoBurbuja(listaPrueba);
+            outputHTML += "<pre>Lista de prueba después del ordenamiento:\n" + JSON.stringify(listaOrdenada, null, 2) + "</pre>";
+
+            // Búsqueda de un elemento en la lista de prueba
+            const elementoBusqueda = 5;
+            const indiceEncontrado = busquedaLineal(listaOrdenada, elementoBusqueda);
+            outputHTML += "<pre>Búsqueda del elemento " + elementoBusqueda + " en la lista de prueba:\nÍndice encontrado: " + indiceEncontrado + "</pre>";
+
+            // Función recursiva para multiplicar un número
+            const numero = 3;
+            const veces = 4;
+            const multiplicacionRecursivaResultado = multiplicacionRecursiva(numero, veces);
+            outputHTML += "<pre>Multiplicación recursiva de " + numero + " por " + veces + " veces:\n" + multiplicacionRecursivaResultado + "</pre>";
+
+            document.getElementById("output").innerHTML = outputHTML;
+        }
+
+        function verificarSimetria(matriz) {
+            // Implementación para verificar si una matriz es simétrica
+            // Suponemos que la matriz es simétrica si es cuadrada y es igual a su traspuesta
+            const filas = matriz.length;
+            const columnas = matriz[0].length;
+            if (filas !== columnas) {
+                return false; // No es cuadrada, por lo tanto no puede ser simétrica
+            }
+            for (let i = 0; i < filas; i++) {
+                for (let j = 0; j < columnas; j++) {
+                    if (matriz[i][j] !== matriz[j][i]) {
+                        return false; // No es igual a su traspuesta
+                    }
+                }
+            }
+            return true; // Es simétrica
+        }
+
+        function ordenamientoBurbuja(lista) {
+            // Implementación del algoritmo de ordenamiento burbuja
+            let n = lista.length;
+            for (let i = 0; i < n-1; i++) {
+                for (let j = 0; j < n-i-1; j++) {
+                    if (lista[j] > lista[j+1]) {
+                        let temp = lista[j];
+                        lista[j] = lista[j+1];
+                        lista[j+1] = temp;
+                    }
+                }
+            }
+            return lista;
+        }
+
+        function busquedaLineal(lista, elemento) {
+            // Implementación de la búsqueda lineal en una lista
+            for (let i = 0; i < lista.length; i++) {
+                if (lista[i] === elemento) {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        function multiplicacionRecursiva(numero, veces) {
+            // Implementación de la multiplicación de un número de manera recursiva
+            if (veces === 0) {
+                return 0;
+            } else if (veces === 1) {
+                return numero;
+            } else {
+                return numero + multiplicacionRecursiva(numero, veces - 1);
+            }
+        }
+    </script>
+
+    <button onclick="generarMatrices()">Generar Matrices y Realizar Operaciones</button>
+</body>
+</html>
